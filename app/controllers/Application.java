@@ -1,5 +1,6 @@
 package controllers;
 
+import models.ContactDB;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -17,7 +18,7 @@ public class Application extends Controller {
    * @return The resulting home page.
    */
   public static Result index() {
-    return ok(Index.render("Welcome to the home page."));
+    return ok(Index.render(ContactDB.getContacts()));
   }
 
   /**
@@ -43,6 +44,7 @@ public class Application extends Controller {
     else {
       ContactFormData data = formData.get();
       System.out.println("Received POST: " + data.getFirstName() + " " + data.getLastName() + " " + data.getTelephone());
+      ContactDB.addContact(data);
       return ok(NewContact.render(Form.form(ContactFormData.class)));
     }
   }
