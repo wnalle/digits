@@ -28,6 +28,14 @@ public class ContactDB {
   }
 
   /**
+   * Deletes a contact given an id.
+   * @param id
+   */
+  public static void deleteContact(long id) {
+    contacts.remove(id);
+  }
+
+  /**
    * Returns a complete list of contacts that have been added so far.
    * @return
    */

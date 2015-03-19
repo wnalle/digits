@@ -31,6 +31,16 @@ public class Application extends Controller {
     return ok(NewContact.render(formData));  }
 
   /**
+   * Deletes a contact from the contact DB.
+   * @param id
+   * @return
+   */
+  public static Result deleteContact(long id) {
+    System.out.println("Delete");
+    ContactDB.deleteContact(id);
+    return ok(Index.render(ContactDB.getContacts()));
+  }
+  /**
    * Pulls the information from the new contact form and prints it to the console.
    * @return A blank new contact form.
    */
