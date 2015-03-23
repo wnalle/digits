@@ -1,17 +1,7 @@
-@(contacts: List[Contact])
+@(id: Long)
 
-@Main("Home") {
+@Main("delete") {
     <div class="container">
-        <table class="table table-bordered tabled-stripped">
-            <tr>
-                <td>First Name</td><td>Last Name</td><td>Telephone Number</td>
-            </tr>
 
-            @for(contact <- contacts) {
-                <tr>
-                    <td>@contact.getFirstName()</td> <td>@contact.getLastName()</td> <td>@contact.getTelephone()</td><td><a href="@routes.Application.newContact(contact.getId())">Edit</a></td><td><a href="@routes.Application.deleteContact(contact.getId())">Delete</a></td>
-                </tr>
-            }
-        </table>
     </div>
 }
