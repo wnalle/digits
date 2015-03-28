@@ -55,7 +55,7 @@ public class Application extends Controller {
       ContactFormData data = formData.get();
       System.out.println("Received POST: " + data.getFirstName() + " " + data.getLastName() + " " + data.getTelephone());
       ContactDB.addContact(data);
-      return ok(NewContact.render(Form.form(ContactFormData.class)));
+      return ok(NewContact.render(formData));
     }
   }
 }
