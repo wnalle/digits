@@ -5,6 +5,7 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.formData.ContactFormData;
+import views.formData.TelephoneTypes;
 import views.html.Index;
 import views.html.NewContact;
 
@@ -23,17 +24,19 @@ public class Application extends Controller {
 
   /**
    * Returns a blank new contact page.
+   * @param id The id.
    * @return The New Contact.
    */
   public static Result newContact(long id) {
     ContactFormData data = (id == 0) ? new ContactFormData() : new ContactFormData(ContactDB.getContact(id));
     Form<ContactFormData> formData = Form.form(ContactFormData.class).fill(data);
-    return ok(NewContact.render(formData));  }
+    return ok(NewContact.render(formData, TelephoneTypes.getTypes()));
+  }
 
   /**
    * Deletes a contact from the contact DB.
-   * @param id
-   * @return
+   * @param id The id.
+   * @return the rendered index page.
    */
   public static Result deleteContact(long id) {
     System.out.println("Delete");
@@ -47,15 +50,16 @@ public class Application extends Controller {
   public static Result postContact() {
     Form<ContactFormData> formData = Form.form(ContactFormData.class).bindFromRequest();
 
+    System.out.println("POST telephone type: " + TelephoneTypes.getTypes(formData.field("telephoneType").value()));
+
     if (formData.hasErrors()) {
-      System.out.println(formData.errors().values());
-      return badRequest(NewContact.render(formData));
+      //System.out.println(formData.errors().values());
+      return badRequest(NewContact.render(formData, TelephoneTypes.getTypes(formData.field("telephoneType").value())));
     }
     else {
       ContactFormData data = formData.get();
-      System.out.println("Received POST: " + data.getFirstName() + " " + data.getLastName() + " " + data.getTelephone());
       ContactDB.addContact(data);
-      return ok(NewContact.render(Form.form(ContactFormData.class)));
+      return ok(NewContact.render(Form.form(ContactFormData.class), TelephoneTypes.getTypes(data.getTelephoneType())));
     }
   }
 }

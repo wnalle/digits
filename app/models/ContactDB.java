@@ -24,7 +24,7 @@ public class ContactDB {
   public static void addContact(ContactFormData data) {
 
     long idVal = (data.getId() == 0) ? currentId++ : data.getId();
-    contacts.put(idVal, new Contact(idVal, data.getFirstName(), data.getLastName(), data.getTelephone()));
+    contacts.put(idVal, new Contact(idVal, data.getFirstName(), data.getLastName(), data.getTelephone(), data.getTelephoneType()));
   }
 
   /**
@@ -37,7 +37,7 @@ public class ContactDB {
 
   /**
    * Returns a complete list of contacts that have been added so far.
-   * @return
+   * @return list of contacts.
    */
   public static List<Contact> getContacts() {
     return new ArrayList<Contact>(contacts.values());

@@ -17,6 +17,8 @@ public class ContactFormData {
   public String telephone = "";
   /** The id. */
   public long id = 0;
+  /** The phone type */
+  public String telephoneType = "";
 
   /**
    * Default constructor.
@@ -33,6 +35,7 @@ public class ContactFormData {
     this.lastName = contact.getLastName();
     this.telephone = contact.getTelephone();
     this.id = contact.getId();
+    this.telephoneType = contact.getTelephoneType();
   }
 
   /**
@@ -42,11 +45,12 @@ public class ContactFormData {
    * @param telephone
    * @param id
    */
-  public ContactFormData(String firstName, String lastName, String telephone, long id) {
+  public ContactFormData(String firstName, String lastName, String telephone, long id, String telephoneType) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.telephone = telephone;
     this.id = id;
+    this.telephoneType = telephoneType;
   }
 
   /**
@@ -81,30 +85,36 @@ public class ContactFormData {
     return id;
   }
 
+  /**
+   * Get the telephone type.
+   * @return
+   */
+  public String getTelephoneType() {
+    return telephoneType;
+  }
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
 
     if (firstName == null || firstName.length() == 0) {
       errors.add(new ValidationError("firstName", "First name is required."));
-      System.out.println("first error");
     }
 
     if (lastName == null || lastName.length() == 0) {
       errors.add(new ValidationError("lastName", "Last name is required."));
-      System.out.println("last error");
     }
 
     if (telephone == null || telephone.length() == 0) {
       errors.add(new ValidationError("telephone", "Telephone number is required."));
-      System.out.println("tele1 error");
     }
 
     if (telephone.length() != 12) {
       errors.add(new ValidationError("telephone", "Telephone number be in xxx-xxx-xxxx format."));
-      System.out.println("tele2 error");
     }
 
-    System.out.println("end error function");
+    if (TelephoneTypes.isType(telephoneType) == false) {
+      errors.add(new ValidationError("telephoneType", "Telephone type is required."));
+    }
+
     return errors.isEmpty() ? null : errors;
   }
 
