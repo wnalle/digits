@@ -1,0 +1,13 @@
+@(contactForm: Form[views.formData.ContactFormData], telephoneTypeMap: Map[String, Boolean])
+
+@bootstrap3.text(contactForm("telephone"),
+    label = "Phone",
+    placeholder = "xxx-xxx-xxxx",
+    help = "")
+
+@bootstrap3.select(contactForm("telephoneType"),
+    label = "Phone type",
+    optionMap = telephoneTypeMap,
+    isMultiple = false,
+    help = "")
+
