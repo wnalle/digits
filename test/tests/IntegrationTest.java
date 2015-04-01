@@ -15,6 +15,9 @@ import tests.pages.IndexPage;
 import tests.pages.NewContactPage;
 
 
+/**
+ * Tests that the index page is available and creating a new contact works.
+ */
 public class IntegrationTest {
   private final int testPort = 3333;
 

@@ -24,12 +24,13 @@ public class ContactDB {
   public static void addContact(ContactFormData data) {
 
     long idVal = (data.getId() == 0) ? currentId++ : data.getId();
-    contacts.put(idVal, new Contact(idVal, data.getFirstName(), data.getLastName(), data.getTelephone(), data.getTelephoneType()));
+    contacts.put(idVal, new Contact(idVal, data.getFirstName(), data.getLastName(),
+        data.getTelephone(), data.getTelephoneType()));
   }
 
   /**
    * Deletes a contact given an id.
-   * @param id
+   * @param id the id.
    */
   public static void deleteContact(long id) {
     contacts.remove(id);

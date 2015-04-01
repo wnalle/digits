@@ -1,6 +1,5 @@
 package tests.pages;
 
-import static org.fluentlenium.core.filter.FilterConstructor.withId;
 import org.fluentlenium.core.FluentPage;
 import org.openqa.selenium.WebDriver;
 import static org.fest.assertions.Assertions.assertThat;

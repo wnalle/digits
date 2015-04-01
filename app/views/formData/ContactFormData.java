@@ -17,7 +17,7 @@ public class ContactFormData {
   public String telephone = "";
   /** The id. */
   public long id = 0;
-  /** The phone type */
+  /** The phone type. */
   public String telephoneType = "";
 
   /**
@@ -28,7 +28,7 @@ public class ContactFormData {
 
   /**
    * Constructor given contact.
-   * @param contact
+   * @param contact The contact object.
    */
   public ContactFormData(Contact contact) {
     this.firstName = contact.getFirstName();
@@ -40,10 +40,11 @@ public class ContactFormData {
 
   /**
    * Constructor given individual fields.
-   * @param firstName
-   * @param lastName
-   * @param telephone
-   * @param id
+   * @param firstName The first name.
+   * @param lastName The last name.
+   * @param telephone The telephone number.
+   * @param telephoneType The type of telephone.
+   * @param id The id.
    */
   public ContactFormData(String firstName, String lastName, String telephone, long id, String telephoneType) {
     this.firstName = firstName;
@@ -79,7 +80,7 @@ public class ContactFormData {
 
   /**
    * Get the id.
-   * @return
+   * @return The id.
    */
   public long getId() {
     return id;
@@ -87,11 +88,16 @@ public class ContactFormData {
 
   /**
    * Get the telephone type.
-   * @return
+   * @return The telephone type.
    */
   public String getTelephoneType() {
     return telephoneType;
   }
+
+  /**
+   * Validates the new contact form.
+   * @return The list of validation errors. Null if no errors found.
+   */
   public List<ValidationError> validate() {
     List<ValidationError> errors = new ArrayList<>();
 
@@ -111,7 +117,7 @@ public class ContactFormData {
       errors.add(new ValidationError("telephone", "Telephone number be in xxx-xxx-xxxx format."));
     }
 
-    if (TelephoneTypes.isType(telephoneType) == false) {
+    if (!TelephoneTypes.isType(telephoneType)) {
       errors.add(new ValidationError("telephoneType", "Telephone type is required."));
     }
 

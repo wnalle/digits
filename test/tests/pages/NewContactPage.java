@@ -1,6 +1,5 @@
 package tests.pages;
 
-import static org.fluentlenium.core.filter.FilterConstructor.withId;
 import org.fluentlenium.core.FluentPage;
 import org.openqa.selenium.WebDriver;
 import static org.fest.assertions.Assertions.assertThat;
@@ -33,18 +32,33 @@ public class NewContactPage extends FluentPage {
     assertThat(title()).isEqualTo("NewContact (digits)");
   }
 
+  /**
+   * Sets the first name.
+   * @param name The first name.
+   */
   public void setFirst(String name) {
     fill("#firstName").with(name);
   }
 
+  /**
+   * Sets the last name.
+   * @param password The last name.
+   */
   public void setLast(String password) {
     fill("#lastName").with(password);
   }
 
+  /**
+   * Sets the phone number.
+   * @param password The phone number.
+   */
   public void setPhone(String password) {
     fill("#telephone").with(password);
   }
 
+  /**
+   * Submits the form.
+   */
   public void submit() {
     submit("#submit");
   }

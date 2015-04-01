@@ -51,7 +51,7 @@ public class Contact {
 
   /**
    * Returns the telephone number.
-   * @return
+   * @return the telephone number.
    */
   public String getTelephone() {
     return telephone;
@@ -59,7 +59,7 @@ public class Contact {
 
   /**
    * Returns the telephone type.
-   * @return
+   * @return the telephone type.
    */
   public String getTelephoneType() {
     return telephoneType;
