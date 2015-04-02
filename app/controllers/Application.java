@@ -50,7 +50,7 @@ public class Application extends Controller {
   public static Result postContact() {
     Form<ContactFormData> formData = Form.form(ContactFormData.class).bindFromRequest();
 
-    System.out.println("POST telephone type: " + TelephoneTypes.getTypes(formData.field("telephoneType").value()));
+    //System.out.println("POST telephone type: " + TelephoneTypes.getTypes(formData.field("telephoneType").value()));
 
     if (formData.hasErrors()) {
       //System.out.println(formData.errors().values());
@@ -58,6 +58,7 @@ public class Application extends Controller {
     }
     else {
       ContactFormData data = formData.get();
+      System.out.println(data.toString());
       ContactDB.addContact(data);
       return ok(NewContact.render(Form.form(ContactFormData.class), TelephoneTypes.getTypes(data.getTelephoneType())));
     }
