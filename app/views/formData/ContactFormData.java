@@ -19,6 +19,8 @@ public class ContactFormData {
   public long id = 0;
   /** The phone type. */
   public String telephoneType = "";
+  /** The list of diet types. */
+  public List<String> dietTypes = new ArrayList<>();
 
   /**
    * Default constructor.
@@ -36,6 +38,7 @@ public class ContactFormData {
     this.telephone = contact.getTelephone();
     this.id = contact.getId();
     this.telephoneType = contact.getTelephoneType();
+    this.dietTypes = contact.getDietTypes();
   }
 
   /**
@@ -46,12 +49,13 @@ public class ContactFormData {
    * @param telephoneType The type of telephone.
    * @param id The id.
    */
-  public ContactFormData(String firstName, String lastName, String telephone, long id, String telephoneType) {
+  public ContactFormData(String firstName, String lastName, String telephone, long id, String telephoneType, List<String> dietTypes) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.telephone = telephone;
     this.id = id;
     this.telephoneType = telephoneType;
+    this.dietTypes = dietTypes;
   }
 
   /**
@@ -92,6 +96,14 @@ public class ContactFormData {
    */
   public String getTelephoneType() {
     return telephoneType;
+  }
+
+  /**
+   * Gets the list of diet types.
+   * @return The diet types.
+   */
+  public List<String> getDietTypes() {
+    return dietTypes;
   }
 
   /**

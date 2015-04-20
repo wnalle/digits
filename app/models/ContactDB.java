@@ -25,7 +25,7 @@ public class ContactDB {
 
     long idVal = (data.getId() == 0) ? currentId++ : data.getId();
     contacts.put(idVal, new Contact(idVal, data.getFirstName(), data.getLastName(),
-        data.getTelephone(), data.getTelephoneType()));
+        data.getTelephone(), data.getTelephoneType(), data.getDietTypes()));
   }
 
   /**

@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 /**
  * Class to hold information for a single contact.
  */
@@ -14,6 +16,8 @@ public class Contact {
   private long id;
   /** The telephone type. */
   private String telephoneType;
+  /** The list of diet types. */
+  private List<String> dietTypes;
 
   /**
    * Initialize a new instance of a contact.
@@ -22,15 +26,17 @@ public class Contact {
    * @param telephone The telephone number.
    * @param telephoneType Type of telephone.
    * @param id The id.
+   * @param dietTypes The list of diet types.
    *
    */
-  public Contact(long id, String firstName, String lastName, String telephone, String telephoneType) {
+  public Contact(long id, String firstName, String lastName, String telephone, String telephoneType, List<String> dietTypes) {
 
     this.firstName = firstName;
     this.lastName = lastName;
     this.telephone = telephone;
     this.telephoneType = telephoneType;
     this.id = id;
+    this.dietTypes = dietTypes;
   }
 
   /**
@@ -70,5 +76,13 @@ public class Contact {
    */
   public long getId() {
     return id;
+  }
+
+  /**
+   * Returns the list of diet types.
+   * @return Diet types.
+   */
+  public List<String> getDietTypes() {
+    return dietTypes;
   }
 }
