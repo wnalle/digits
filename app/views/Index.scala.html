@@ -12,10 +12,10 @@
                     <td>@contact.getFirstName()</td>
                     <td>@contact.getLastName()</td>
                     <td>@contact.getTelephone()</td>
+                    <td>@contact.getTelephoneType().getTelephoneType()</td>
                     <td>@for(dt <- contact.getDietTypes()) {
-                      @dt,
+                      @dt.getDietType(),
                     }</td>
-                    <td>@contact.getTelephoneType()</td>
                     <td><a href="@routes.Application.newContact(contact.getId())">Edit</a></td>
                     <td><a href="@routes.Application.deleteContact(contact.getId())">Delete</a></td>
                 </tr>

@@ -2,6 +2,7 @@ package views.formData;
 
 import java.util.HashMap;
 import java.util.Map;
+import models.TelephoneType;
 
 /**
  * Created by wgnalle on 3/30/2015.
@@ -29,8 +30,8 @@ public class TelephoneTypes {
    * @param type The type to check.
    * @return True if the type is valid. False otherwise.
    */
-  public static Boolean isType(String type) {
-    return ALLTYPES.containsKey(type);
+  public static Boolean isType(TelephoneType type) {
+    return ALLTYPES.containsKey(type.getTelephoneType());
   }
 
   /**
@@ -38,12 +39,12 @@ public class TelephoneTypes {
    * @param type The type to map to true.
    * @return The map of types.
    */
-  public static Map<String, Boolean> getTypes(String type) {
+  public static Map<String, Boolean> getTypes(TelephoneType type) {
     Map<String, Boolean> tmp = new HashMap<String, Boolean>();
     tmp.putAll(ALLTYPES);
 
     if (isType(type)) {
-      tmp.put(type, true);
+      tmp.put(type.getTelephoneType(), true);
     }
 
     return tmp;

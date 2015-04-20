@@ -15,9 +15,9 @@ public class Contact {
   /** The id. */
   private long id;
   /** The telephone type. */
-  private String telephoneType;
+  private TelephoneType telephoneType;
   /** The list of diet types. */
-  private List<String> dietTypes;
+  private List<DietType> dietTypes;
 
   /**
    * Initialize a new instance of a contact.
@@ -29,7 +29,7 @@ public class Contact {
    * @param dietTypes The list of diet types.
    *
    */
-  public Contact(long id, String firstName, String lastName, String telephone, String telephoneType, List<String> dietTypes) {
+  public Contact(long id, String firstName, String lastName, String telephone, TelephoneType telephoneType, List<DietType> dietTypes) {
 
     this.firstName = firstName;
     this.lastName = lastName;
@@ -67,7 +67,7 @@ public class Contact {
    * Returns the telephone type.
    * @return the telephone type.
    */
-  public String getTelephoneType() {
+  public TelephoneType getTelephoneType() {
     return telephoneType;
   }
 
@@ -82,7 +82,7 @@ public class Contact {
    * Returns the list of diet types.
    * @return Diet types.
    */
-  public List<String> getDietTypes() {
+  public List<DietType> getDietTypes() {
     return dietTypes;
   }
 }

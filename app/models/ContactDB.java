@@ -15,7 +15,52 @@ public class ContactDB {
    */
   private static Map<Long, Contact> contacts = new HashMap<>();
 
+  /** The map of telephone types. */
+  private static Map<String, TelephoneType> telephoneTypes = new HashMap<>();
+
+  /** The map of diet types */
+  private static Map<String, DietType> dietTypes = new HashMap<>();
+
+  /** The current ID */
   private static long currentId = 1;
+
+  /**
+   * Link the string of a telephone type to the associated instance.
+   * @param telephoneType The instance of the telephone type.
+   */
+  public static void addTelephoneType(TelephoneType telephoneType) {
+    telephoneTypes.put(telephoneType.getTelephoneType(), telephoneType);
+  }
+
+  /**
+   * Link the string of a diet type to the associated instance.
+   * @param dietType The instance of the telephone type.
+   */
+  public static void addDietType(DietType dietType) {
+    dietTypes.put(dietType.getDietType(), dietType);
+  }
+
+  /**
+   * Returns the instance of the given telephone type.
+   * @param telephoneType the string name of the telephone type.
+   * @return
+   */
+  public static TelephoneType getTelephoneType(String telephoneType) {
+    if (telephoneTypes.containsKey(telephoneType))
+      return telephoneTypes.get(telephoneType);
+    throw new RuntimeException();
+  }
+
+  /**
+   * Returns the instance of the given diet type.
+   * @param dietType the string name of the telephone type.
+   * @return
+   */
+  public static DietType getDietType(String dietType) {
+    if (dietTypes.containsKey(dietType))
+      return dietTypes.get(dietType);
+    throw new RuntimeException();
+  }
 
   /**
    * Add a new contact to the internal list of contacts.

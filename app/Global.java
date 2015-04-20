@@ -1,4 +1,6 @@
 import models.ContactDB;
+import models.DietType;
+import models.TelephoneType;
 import play.Application;
 import play.GlobalSettings;
 import views.formData.ContactFormData;
@@ -17,5 +19,14 @@ public class Global extends GlobalSettings {
     ContactDB.addContact(new ContactFormData("Third", "Contact3", "333-333-3333", 3, "Fax"));
     ContactDB.addContact(new ContactFormData("Forth", "Contact4", "444-444-4444", 4, "Work"));
 */
+
+    ContactDB.addTelephoneType(new TelephoneType("Mobile"));
+    ContactDB.addTelephoneType(new TelephoneType("Home"));
+    ContactDB.addTelephoneType(new TelephoneType("Work"));
+    ContactDB.addDietType(new DietType("Chicken"));
+    ContactDB.addDietType(new DietType("Fish"));
+    ContactDB.addDietType(new DietType("Beef"));
+    ContactDB.addDietType(new DietType("Dairy"));
+    ContactDB.addDietType(new DietType("Gluten"));
   }
 }

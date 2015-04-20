@@ -58,9 +58,10 @@ public class Application extends Controller {
   public static Result postContact() {
     Form<ContactFormData> formData = Form.form(ContactFormData.class).bindFromRequest();
 
+    System.out.println(formData.toString());
     if (formData.hasErrors()) {
       //System.out.println(formData.errors().values());
-      return badRequest(NewContact.render(formData, TelephoneTypes.getTypes(formData.field("telephoneType").value()), DietTypes.getTypes()));
+      return badRequest(NewContact.render(formData, TelephoneTypes.getTypes(ContactDB.getTelephoneType(formData.field("telephoneType").value())), DietTypes.getTypes()));
     }
     else {
       ContactFormData data = formData.get();

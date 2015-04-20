@@ -3,6 +3,7 @@ package views.formData;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import models.DietType;
 
 /**
  * Created by wgnalle on 3/30/2015.
@@ -31,8 +32,8 @@ public class DietTypes {
    * @param type The type to check.
    * @return True if the type is valid. False otherwise.
    */
-  public static Boolean isType(String type) {
-    return ALLTYPES.containsKey(type);
+  public static Boolean isType(DietType type) {
+    return ALLTYPES.containsKey(type.getDietType());
   }
 
   /**
@@ -40,13 +41,13 @@ public class DietTypes {
    * @param types The type to map to true.
    * @return The map of types.
    */
-  public static Map<String, Boolean> getTypes(List<String> types) {
+  public static Map<String, Boolean> getTypes(List<DietType> types) {
     Map<String, Boolean> tmp = new HashMap<String, Boolean>();
     tmp.putAll(ALLTYPES);
 
-    for (String type : types) {
+    for (DietType type : types) {
       if (isType(type)) {
-        tmp.put(type, true);
+        tmp.put(type.getDietType(), true);
       }
     }
 
