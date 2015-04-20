@@ -1,22 +1,41 @@
 package models;
 
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  * Created by wgnalle on 4/19/2015.
  */
-public class DietType {
+@Entity
+public class DietType extends play.db.ebean.Model {
   /** The id. */
+  @Id
   private long id;
   /** The type of phone. */
   private String dietType;
   /** The list of contacts associated with this type */
+  @ManyToMany(mappedBy = "dietTypes", cascade = CascadeType.PERSIST)
   private List<Contact> contacts;
 
   public DietType(String dietType) {
     this.dietType = dietType;
   }
-  
+
+  public void setDietType(String dietType) {
+    this.dietType = dietType;
+  }
+
+  /**
+   * The EBean ORM finder method for database queries.
+   * @return The finder method.
+   */
+  public static Finder<Long, DietType> find() {
+    return new Finder<Long, DietType>(Long.class, DietType.class);
+  }
+
   /**
    * Set the id.
    * @param id The id.

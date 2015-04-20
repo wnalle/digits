@@ -49,9 +49,8 @@ public class ContactFormData {
    * @param lastName The last name.
    * @param telephone The telephone number.
    * @param telephoneType The type of telephone.
-   * @param id The id.
    */
-  public ContactFormData(String firstName, String lastName, String telephone, long id, TelephoneType telephoneType, List<DietType> dietTypes) {
+  public ContactFormData(String firstName, String lastName, String telephone, TelephoneType telephoneType, List<DietType> dietTypes) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.telephone = telephone;

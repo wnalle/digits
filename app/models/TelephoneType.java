@@ -1,20 +1,39 @@
 package models;
 
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * Created by wgnalle on 4/19/2015.
  */
-public class TelephoneType {
+@Entity
+public class TelephoneType extends play.db.ebean.Model {
   /** The id. */
+  @Id
   private long id;
   /** The type of phone. */
   private String telephoneType;
-  /** The list of contacts associated with this type */
+  /** The list of contacts associated with this type. */
+  @OneToMany(mappedBy = "telephoneType", cascade = CascadeType.PERSIST)
   private List<Contact> contacts;
 
+  /**
+   * Constructor that takes telephone type as string.
+   * @param telephoneType The string telephone type.
+   */
   public TelephoneType(String telephoneType) {
     this.telephoneType = telephoneType;
+  }
+
+  /**
+   * The EBean ORM finder method for database queries.
+   * @return The finder method.
+   */
+  public static Finder<Long, TelephoneType> find() {
+    return new Finder<Long, TelephoneType>(Long.class, TelephoneType.class);
   }
 
   /**

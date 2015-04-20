@@ -1,9 +1,7 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import views.formData.ContactFormData;
 
 /**
@@ -13,23 +11,23 @@ public class ContactDB {
   /**
    * The list of contacts.
    */
-  private static Map<Long, Contact> contacts = new HashMap<>();
+  //private static Map<Long, Contact> contacts = new HashMap<>();
 
   /** The map of telephone types. */
-  private static Map<String, TelephoneType> telephoneTypes = new HashMap<>();
+  //private static Map<String, TelephoneType> telephoneTypes = new HashMap<>();
 
   /** The map of diet types */
-  private static Map<String, DietType> dietTypes = new HashMap<>();
+  //private static Map<String, DietType> dietTypes = new HashMap<>();
 
   /** The current ID */
-  private static long currentId = 1;
+  //private static long currentId = 1;
 
   /**
    * Link the string of a telephone type to the associated instance.
    * @param telephoneType The instance of the telephone type.
    */
   public static void addTelephoneType(TelephoneType telephoneType) {
-    telephoneTypes.put(telephoneType.getTelephoneType(), telephoneType);
+    telephoneType.save();
   }
 
   /**
@@ -37,29 +35,34 @@ public class ContactDB {
    * @param dietType The instance of the telephone type.
    */
   public static void addDietType(DietType dietType) {
-    dietTypes.put(dietType.getDietType(), dietType);
+    dietType.save();
   }
 
   /**
    * Returns the instance of the given telephone type.
-   * @param telephoneType the string name of the telephone type.
+   * @param typeString the string name of the telephone type.
    * @return
    */
-  public static TelephoneType getTelephoneType(String telephoneType) {
-    if (telephoneTypes.containsKey(telephoneType))
-      return telephoneTypes.get(telephoneType);
-    throw new RuntimeException();
+  public static TelephoneType getTelephoneType(String typeString) {
+    TelephoneType telephoneType = TelephoneType.find().where().eq("telephoneType", typeString).findUnique();
+    if (telephoneType == null) {
+      throw new RuntimeException();
+    }
+
+    return telephoneType;
   }
 
   /**
    * Returns the instance of the given diet type.
-   * @param dietType the string name of the telephone type.
-   * @return
+   * @param typeString the string name of the telephone type.
+   * @return the diet type.
    */
-  public static DietType getDietType(String dietType) {
-    if (dietTypes.containsKey(dietType))
-      return dietTypes.get(dietType);
-    throw new RuntimeException();
+  public static DietType getDietType(String typeString) {
+    DietType dietType = DietType.find().where().eq("dietType", typeString).findUnique();
+    if (dietType == null) {
+      throw new RuntimeException();
+    }
+    return dietType;
   }
 
   /**
@@ -67,26 +70,37 @@ public class ContactDB {
    * @param data The contact data.
    */
   public static void addContact(ContactFormData data) {
+    TelephoneType telephoneType = getTelephoneType(data.getTelephoneType().getTelephoneType());
+    List<DietType> dietTypes = new ArrayList<>();
+    for (DietType dt : data.getDietTypes()) {
+      dietTypes.add(dt);
+    }
 
-    long idVal = (data.getId() == 0) ? currentId++ : data.getId();
-    contacts.put(idVal, new Contact(idVal, data.getFirstName(), data.getLastName(),
-        data.getTelephone(), data.getTelephoneType(), data.getDietTypes()));
+    Contact contact = new Contact(data.firstName, data.lastName, data.telephone, telephoneType, dietTypes);
+
+    // Make relationships bi-directional.
+    telephoneType.addContact(contact);
+    for (DietType dt : dietTypes) {
+      dt.addContact(contact);
+    }
+
+    contact.save();
   }
 
   /**
    * Deletes a contact given an id.
    * @param id the id.
    */
-  public static void deleteContact(long id) {
-    contacts.remove(id);
-  }
+ // public static void deleteContact(long id) {
+ //   contacts.remove(id);
+ // }
 
   /**
    * Returns a complete list of contacts that have been added so far.
    * @return list of contacts.
    */
   public static List<Contact> getContacts() {
-    return new ArrayList<Contact>(contacts.values());
+    return Contact.find().all();
   }
 
   /**
@@ -95,6 +109,13 @@ public class ContactDB {
    * @return The contact info.
    */
   public static Contact getContact(long id) {
-    return contacts.get(id);
+    Contact contact = Contact.find().byId(id);
+
+    if (contact == null) {
+      throw new RuntimeException();
+    }
+
+    return contact;
+
   }
 }

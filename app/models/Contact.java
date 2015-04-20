@@ -1,11 +1,17 @@
 package models;
 
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * Class to hold information for a single contact.
  */
-public class Contact {
+@Entity
+public class Contact extends play.db.ebean.Model {
   /** The first name. */
   private String firstName;
   /** The last name. */
@@ -13,11 +19,46 @@ public class Contact {
   /** The telephone number. */
   private String telephone;
   /** The id. */
+  @Id
   private long id;
   /** The telephone type. */
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private TelephoneType telephoneType;
   /** The list of diet types. */
+  @ManyToMany(cascade = CascadeType.PERSIST)
   private List<DietType> dietTypes;
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setTelephoneType(TelephoneType telephoneType) {
+    this.telephoneType = telephoneType;
+  }
+
+  public void setDietTypes(List<DietType> dietTypes) {
+    this.dietTypes = dietTypes;
+  }
+
+  /**
+   * The EBean ORM finder method for database queries.
+   * @return The finder method.
+   */
+  public static Finder<Long, Contact> find() {
+    return new Finder<Long, Contact>(Long.class, Contact.class);
+  }
 
   /**
    * Initialize a new instance of a contact.
@@ -25,11 +66,10 @@ public class Contact {
    * @param lastName The last name.
    * @param telephone The telephone number.
    * @param telephoneType Type of telephone.
-   * @param id The id.
    * @param dietTypes The list of diet types.
    *
    */
-  public Contact(long id, String firstName, String lastName, String telephone, TelephoneType telephoneType, List<DietType> dietTypes) {
+  public Contact(String firstName, String lastName, String telephone, TelephoneType telephoneType, List<DietType> dietTypes) {
 
     this.firstName = firstName;
     this.lastName = lastName;
