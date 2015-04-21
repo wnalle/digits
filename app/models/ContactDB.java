@@ -3,24 +3,12 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 import views.formData.ContactFormData;
+import views.formData.DietTypes;
 
 /**
  * Class for holding an in-memory list of all contacts created so far.
  */
 public class ContactDB {
-  /**
-   * The list of contacts.
-   */
-  //private static Map<Long, Contact> contacts = new HashMap<>();
-
-  /** The map of telephone types. */
-  //private static Map<String, TelephoneType> telephoneTypes = new HashMap<>();
-
-  /** The map of diet types */
-  //private static Map<String, DietType> dietTypes = new HashMap<>();
-
-  /** The current ID */
-  //private static long currentId = 1;
 
   /**
    * Link the string of a telephone type to the associated instance.
@@ -76,7 +64,19 @@ public class ContactDB {
       dietTypes.add(dt);
     }
 
-    Contact contact = new Contact(data.firstName, data.lastName, data.telephone, telephoneType, dietTypes);
+    Contact contact;
+    if (data.id == 0) {
+      contact = new Contact(data.firstName, data.lastName, data.telephone, data.telephoneType, data.dietTypes);
+    }
+    else {
+      contact = Contact.find().byId(data.id);
+      contact.setFirstName(data.firstName);
+      contact.setLastName(data.lastName);
+      contact.setTelephone(data.telephone);
+      contact.setTelephoneType(data.telephoneType);
+      contact.setDietTypes(data.dietTypes);
+    }
+
 
     // Make relationships bi-directional.
     telephoneType.addContact(contact);
@@ -91,16 +91,19 @@ public class ContactDB {
    * Deletes a contact given an id.
    * @param id the id.
    */
- // public static void deleteContact(long id) {
- //   contacts.remove(id);
- // }
+  public static void deleteContact(long id) {
+    Contact contact = Contact.find().byId(id);
+    TelephoneType telephoneType = TelephoneType.find().byId(contact.getTelephoneType().getId());
+    contact.deleteManyToManyAssociations("dietTypes");
+    contact.delete();
+  }
 
   /**
    * Returns a complete list of contacts that have been added so far.
    * @return list of contacts.
    */
   public static List<Contact> getContacts() {
-    return Contact.find().all();
+    return Contact.find().orderBy("id").findList();
   }
 
   /**

@@ -33,12 +33,15 @@ public class Application extends Controller {
   public static Result newContact(long id) {
     ContactFormData data = (id == 0) ? new ContactFormData() : new ContactFormData(ContactDB.getContact(id));
     Map<String, Boolean> dts = DietTypes.getTypes();
+    Map<String, Boolean> ty = TelephoneTypes.getTypes();
     if (id != 0) {
       dts = DietTypes.getTypes(ContactDB.getContact(id).getDietTypes());
+      ty = TelephoneTypes.getTypes(data.getTelephoneType());
     }
 
+
     Form<ContactFormData> formData = Form.form(ContactFormData.class).fill(data);
-    return ok(NewContact.render(formData, TelephoneTypes.getTypes(), dts));
+    return ok(NewContact.render(formData, ty, dts));
   }
 
   /**
@@ -48,7 +51,7 @@ public class Application extends Controller {
    */
   public static Result deleteContact(long id) {
     System.out.println("Delete");
-    //ContactDB.deleteContact(id);
+    ContactDB.deleteContact(id);
     return ok(Index.render(ContactDB.getContacts()));
   }
   /**
@@ -58,10 +61,9 @@ public class Application extends Controller {
   public static Result postContact() {
     Form<ContactFormData> formData = Form.form(ContactFormData.class).bindFromRequest();
 
-    System.out.println(formData.toString());
     if (formData.hasErrors()) {
-      //System.out.println(formData.errors().values());
-      return badRequest(NewContact.render(formData, TelephoneTypes.getTypes(ContactDB.getTelephoneType(formData.field("telephoneType").value())), DietTypes.getTypes()));
+      Map<String, Boolean> ty = TelephoneTypes.getTypes();
+      return badRequest(NewContact.render(formData, TelephoneTypes.getTypes(), DietTypes.getTypes()));
     }
     else {
       ContactFormData data = formData.get();

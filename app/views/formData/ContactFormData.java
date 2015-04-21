@@ -132,6 +132,7 @@ public class ContactFormData {
 
     if (!TelephoneTypes.isType(telephoneType)) {
       errors.add(new ValidationError("telephoneType", "Telephone type is required."));
+      System.out.println("Telephone type is required.");
     }
 
     return errors.isEmpty() ? null : errors;
